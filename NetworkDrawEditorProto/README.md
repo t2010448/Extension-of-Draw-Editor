@@ -134,7 +134,8 @@
 	| `void sendFigure(Figure f)` | 図形をサーバーに送信 |
 	
 	>現状の`sendFigure`は`ADD_FIGURE`コマンドで図形を送るだけなので、
-	>`sendData(DataBox d)`にでも変えて他のコマンドも送れるようにした方が良いかもしれない
+	>`sendData(DataBox d)`にでも変えて他のコマンドも送れるようにした方が良いかもしれない(コントローラ、ビュー側で`DataBox`に入れる手間がかかるけど)。
+	>もしくは、`severAddFigure`とか`severDeleteFigure`にするか(クライアントの図形リストへの操作メソッドとの名前被りを気にするの面倒なので`sendData(DataBox d)`で良いかも)。
 
 ## `CommClient.java`
 
