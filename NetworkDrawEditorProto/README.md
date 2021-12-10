@@ -100,7 +100,7 @@ Meanwhile, the compiled output files will be generated in the `bin` folder by de
 	| `int getFiguresSize()` | 図形リストのサイズを返す |
 
 - #### `class  ServerThread`
-	クライアントとサーバーを中継するクラス
+	クライアントとサーバーを中継するスレッドクラス
 	
 	図形リストが更新されるとクライアントに図形リストを送信し、クライアントからデータを受信するとコマンドに従ってメソッドを呼び出してデータを渡す
 
