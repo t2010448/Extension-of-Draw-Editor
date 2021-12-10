@@ -165,3 +165,4 @@ Controller
 
 ## `DrawFrame.java`
 View
+>メニューとか適当なので良い感じに変えちゃってください
