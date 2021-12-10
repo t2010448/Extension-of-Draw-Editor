@@ -136,7 +136,6 @@
 	>現状の`sendFigure`は`ADD_FIGURE`コマンドで図形を送るだけなので、
 	>`sendData(DataBox d)`にでも変えて他のコマンドも送れるようにした方が良いかもしれない(コントローラ、ビュー側で`DataBox`に入れる手間がかかるけど)。
 	>もしくは、`severAddFigure`とか`severDeleteFigure`にするか(自クライアントの図形リストへの操作メソッドとの名前被りを気にするの面倒なのでやっぱり`sendData(DataBox d)`で良いかも)。
-	>それか、別クラスで作るか。
 
 ## `CommClient.java`
 
