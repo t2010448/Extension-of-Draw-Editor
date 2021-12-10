@@ -132,6 +132,9 @@
 	| `void setFigShape(FigShape s)` | 現在の形をセット |
 	| `void reshapeFigure(int x1,int y1,int x2,int y2)` | 図形を変形 |
 	| `void sendFigure(Figure f)` | 図形をサーバーに送信 |
+	
+	>現状の`sendFigure`は`ADD_FIGURE`コマンドで図形を送るだけなので、
+	>`sendData(DataBox d)`にでも変えて他のコマンドも送れるようにした方が良いかもしれない
 
 ## `CommClient.java`
 
