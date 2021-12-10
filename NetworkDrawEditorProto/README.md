@@ -50,8 +50,8 @@
 - #### `class Figure` 
 	図形クラス (継承して利用する)
 	
-	 -  `RectangleFigure` 矩形塗りつぶし
-	 -  `FillRectFigure` 矩形輪郭
+	 -  `RectangleFigure` 矩形輪郭
+	 -  `FillRectFigure` 矩形塗りつぶし
 
 
 # `Server` : サーバープログラム
