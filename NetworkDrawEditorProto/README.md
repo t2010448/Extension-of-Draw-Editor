@@ -42,16 +42,16 @@
 
 	|Enum |  |  
 	|:---|:--| 
-	|`RECTANGLE`|`FillRectFigure` 矩形輪郭|
-	|`FILLRECT` |`RectangleFigure` 矩形塗りつぶし|
+	|`RECTANGLE`|`RectangleFigure` 矩形輪郭|
+	|`FILLRECT` |`FillRectFigure` 矩形塗りつぶし|
 
 ## `Figure.java`
 
 - #### `class Figure` 
 	図形クラス (継承して利用する)
 	
-	 -  `FillRectFigure` 矩形輪郭
 	 -  `RectangleFigure` 矩形塗りつぶし
+	 -  `FillRectFigure` 矩形輪郭
 
 
 # `Server` : サーバープログラム
