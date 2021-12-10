@@ -16,8 +16,8 @@
 	
 	|メソッド|  |
 	|:--|:--|
-	| `Command getCommand()` |コマンドと図形リストのデータを格納|
-	| `ArrayList<Figure> getFigList()` |コマンドと図形のデータを格納|
+	| `Command getCommand()` |コマンドの取り出し|
+	| `ArrayList<Figure> getFigList()` |図形リストの取り出し|
 	|`Figure getFigure()`|図形の取り出し|
 
 ##  `Command.java`
