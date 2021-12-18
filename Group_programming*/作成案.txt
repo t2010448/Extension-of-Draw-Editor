@@ -1,0 +1,11 @@
+model
+
+fileの保存、呼び出し
+    上書き保存、新規保存
+    上書きして呼び出し
+図形の選択
+
+・figures
+図形の内部の点かの判定
+
+figureにLaser point、freehandを追加
