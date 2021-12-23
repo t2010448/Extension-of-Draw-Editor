@@ -199,7 +199,9 @@ public class DrawController implements MouseListener,MouseMotionListener,KeyList
                 model.setDrawingFigure(null);
                 break;
             case "select" :
+                // 図形選択中なら
                 if(model.getDrawingFigure()!=null) {
+                    // 変形を確定(ここでは選択解除しない)
                     model.sendData(new DataBox(Command.REPLACE_FIGURE, model.getDrawingFigure()));
                 }
                 break;
