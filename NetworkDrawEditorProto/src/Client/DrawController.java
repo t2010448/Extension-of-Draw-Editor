@@ -57,6 +57,8 @@ public class DrawController implements MouseListener,MouseMotionListener,KeyList
     public void actionPerformed(ActionEvent e) { }
 }
 /* 
+// model.getMode(), model.setHandle(), model.getHandle(), model.selectFigure(int x, int y) の追加
+// model.setDrawingFigure(Figure f) に setChanged();notifyObservers(); の追加
 package Client;
 
 import Public.*;
