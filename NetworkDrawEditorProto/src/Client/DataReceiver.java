@@ -11,12 +11,12 @@ public class DataReceiver {
     public DataReceiver(DrawModel m,CommClient cc) {
         model = m;
         this.cc = cc;
-        receiving();
+        start();
     }
     
     // プログラム終了まで動き続ける
     // コマンドとデータを受け取ってメソッドを呼び出す
-    public void receiving() {
+    public void start() {
         DataBox dataBox = null;
         Command command = null;
         while((dataBox=cc.recv())!=null) { // データ受信
@@ -25,9 +25,29 @@ public class DataReceiver {
                 case SET_FIGURES :
                     model.setFigures(dataBox.getFigList());
                     break;
-                case ADD_FIGURE : // addFigure で figures に Figure を追加
-                    model.addFigure(dataBox.getFigure());
+                /*
+                // model.getMode(), model.setHandle() の追加
+                // model.setDrawingFigure(Figure f) に setChanged();notifyObservers(); の追加
+                case SET_FIGURES :
+                    ArrayList<Figure> figL = dataBox.getFigList();
+                    model.setFigures(figL);
+                    // 図形選択中の場合、選択していた図形と同じIDの図形を選択しなおす(変形されている場合に備えて)
+                    if(model.getMode()=="select" && model.getDrawingFigure()!=null) {
+                        int i;
+                        for (i = 0; i < figL.size(); i++) {
+                            if(model.getDrawingFigure().getId() == figL.get(i).getId()) {
+                                model.setDrawingFigure(figL.get(i));
+                                model.setHandle();
+                                break;
+                            }
+                        }
+                        // 選択中の図形が他のクライアントによって削除されていたら、選択解除
+                        if(i==figL.size()) {
+                            model.setDrawingFigure(null);
+                        }
+                    }
                     break;
+                */
                 default :
                     break;
             }
