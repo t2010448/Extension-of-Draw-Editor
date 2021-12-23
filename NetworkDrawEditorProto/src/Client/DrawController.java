@@ -211,14 +211,8 @@ public class DrawController implements MouseListener,MouseMotionListener,KeyList
     public void mouseExited(MouseEvent e) { }
     public void mouseMoved(MouseEvent e) { }
 
-    public void keyTyped(KeyEvent e) {
+        public void keyTyped(KeyEvent e) {
         switch(e.getKeyChar()) {
-            case 'f':
-                model.setFigShape(FigShape.FILLRECT);
-                break;
-            case 'e':
-                model.setFigShape(FigShape.RECTANGLE);
-                break;
             case 'x' : // 選択している図形削除
                 if((model.getDrawingFigure())!=null) {
                     model.sendData(new DataBox(Command.DELETE_FIGURE, model.getDrawingFigure()));
@@ -226,14 +220,20 @@ public class DrawController implements MouseListener,MouseMotionListener,KeyList
                 }
                 break;
             
-                // 仮置き (実際はViewでボタンによってモード切り替え？)
+            // 仮置き (実際はViewでボタンによってモード切り替え？)
+            case 'f':
+                model.setFigShape(FigShape.FILLRECT);
+                break;
+            case 'e':
+                model.setFigShape(FigShape.RECTANGLE);
+                break;
             case 's' :
                 model.setMode("select");
                 break;
             case 'd' :
                 model.setMode("draw");
                 break;
-                // ここまで
+            // ここまで
 
             default :
                 break;
