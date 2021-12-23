@@ -215,7 +215,7 @@ public class DrawController implements MouseListener,MouseMotionListener,KeyList
     public void mouseExited(MouseEvent e) { }
     public void mouseMoved(MouseEvent e) { }
 
-        public void keyTyped(KeyEvent e) {
+    public void keyTyped(KeyEvent e) {
         switch(e.getKeyChar()) {
             case 'x' : // 選択している図形削除
                 if((model.getDrawingFigure())!=null) {
