@@ -7,12 +7,13 @@ import java.io.Serializable;
 public class Figure implements Serializable{
     protected int x,y,width,height;
     protected Color color;
-    //protected Color lineColor;
+    protected int id;
 
     public Figure(int x,int y,int w,int h,Color c) {
         this.x = x; this.y = y;
         width = w; height = h;
         color = c;
+        id = 0;
     }
     
     public void setSize(int w,int h) {
@@ -47,5 +48,14 @@ public class Figure implements Serializable{
     }
     public Color getColor() {
         return color;
+    }
+    public boolean judgein(int x, int y) {
+        return false;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getId() {
+        return id;
     }
 }
