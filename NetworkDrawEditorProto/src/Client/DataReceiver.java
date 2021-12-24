@@ -23,12 +23,6 @@ public class DataReceiver {
             command = dataBox.getCommand();
             switch(command){ // command で分岐
                 case SET_FIGURES :
-                    model.setFigures(dataBox.getFigList());
-                    break;
-                /*
-                // model.getMode(), model.setHandle() の追加
-                // model.setDrawingFigure(Figure f) に setChanged();notifyObservers(); の追加
-                case SET_FIGURES :
                     ArrayList<Figure> figL = dataBox.getFigList();
                     model.setFigures(figL);
                     // 図形選択中の場合、選択していた図形と同じIDの図形を選択しなおす(変形されている場合に備えて)
@@ -47,7 +41,6 @@ public class DataReceiver {
                         }
                     }
                     break;
-                */
                 default :
                     break;
             }
