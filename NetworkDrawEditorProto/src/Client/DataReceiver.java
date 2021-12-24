@@ -1,5 +1,7 @@
 package Client;
 
+import java.util.ArrayList;
+
 import Public.*;
 
 // サーバーから受信するためのクラス
