@@ -15,4 +15,15 @@ public class CircleFigure extends Figure{
     public FigShape getFigShape() { // 形を返す
         return FigShape.CIRCLE;
     }
+    public boolean judgein(int x, int y) {
+        double rx = width/2, ry = height/2;
+        double cx = this.x+rx, cy = this.y+ry; 
+        double px = x - cx, py = rx/ry * (y - cy);
+        int r = 6;
+        if( (px*px + py*py <= (rx+r)*(rx+r)) && (px*px + py*py > (rx-r)*(rx-r)) ) {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
