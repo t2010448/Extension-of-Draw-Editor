@@ -42,6 +42,8 @@ class ServerObservable extends Observable implements Serializable{
     }
     // 図形リストに Figure f を追加
     public void addFigure(Figure f) {
+        f.setId(lastId);
+        lastId++;
         figures.add(f);
         setChanged();
         notifyObservers();
@@ -95,7 +97,7 @@ class ServerThread extends Thread implements Observer {
         so.addObserver(this);
         cs.send(new DataBox(Command.SET_FIGURES,so.getFigures()));
     }
-
+    
     // Observable の変化で自動実行
     public void update(Observable o,Object arg) {
         cs.send(new DataBox(Command.SET_FIGURES,so.getFigures()));
