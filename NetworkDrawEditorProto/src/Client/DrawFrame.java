@@ -59,7 +59,11 @@ class Canvas extends JPanel implements Observer {
         }
         Figure f;
         if ((f = model.getDrawingFigure()) != null) {
-            f.draw(g);
+            if (model.getMode()!="select") {
+                f.draw(g);
+            }else{
+                model.getHandle().draw(g);
+            }
         }
     }
 
