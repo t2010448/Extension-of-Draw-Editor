@@ -15,4 +15,11 @@ public class RectangleFigure extends Figure {
     public FigShape getFigShape() { // 形を返す 
         return FigShape.RECTANGLE;
     }
+    public boolean judgein(int x, int y) {
+        if( (this.x < x && x < this.x + this.width) && (this.y < y && y < this.y + this.height) ) {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
