@@ -117,6 +117,10 @@ class ServerThread extends Thread implements Observer {
                         break;
                     case REPLACE_FIGURE :
                         so.replaceFigure(dataBox.getFigure());
+                        break;
+                    case SET_FIGURES :
+                        so.setFigures(dataBox.getFigList());
+                        break;
                     default :
                         break;
                 }
