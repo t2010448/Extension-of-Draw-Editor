@@ -16,7 +16,9 @@ public class RectangleFigure extends Figure {
         return FigShape.RECTANGLE;
     }
     public boolean judgein(int x, int y) {
-        if( (this.x < x && x < this.x + this.width) && (this.y < y && y < this.y + this.height) ) {
+        int r = 6;
+        if( ( (this.x-r <= x && x <= this.x+this.width+r) && (this.y-r <= y && y <= this.y+this.height+r) ) &&
+            ( (x < this.x+r || this.x+this.width-r < x) || (y < this.y+r || this.y+this.height-r < y) ) ) {
             return true;
         }else{
             return false;
