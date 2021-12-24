@@ -36,6 +36,7 @@ public class DrawFrame extends JFrame {
     }
 }
 
+
 @SuppressWarnings("deprecation")
 class Canvas extends JPanel implements Observer {
     protected DrawModel model;
@@ -66,6 +67,7 @@ class Canvas extends JPanel implements Observer {
         repaint();
     }
 }
+
 
 class MenuBar extends JMenuBar implements ActionListener {
     protected DrawModel model;
@@ -121,28 +123,47 @@ class MenuBar extends JMenuBar implements ActionListener {
     }
 }
 
+
 class ButtonPanel extends JPanel implements ActionListener {
     protected DrawModel model;
     protected JFrame frame;
-    protected JButton color;
+    protected JButton color, saveAs;
 
     public ButtonPanel(DrawModel model, JFrame parent) {
         this.model = model;
         this.frame = parent;
         this.setBackground(Color.GRAY);
 
-        color = new JButton("Color");
+        var icon = new ImageIcon("../src/Client/img/icon_color.jpg");
+        color = new JButton(icon);
         color.setActionCommand("color");
+        color.addActionListener(this);
+        this.add(color);
+
+        icon = new ImageIcon("../src/Client/img/icon_save.jpg");
+        color = new JButton(icon);
+        color.setActionCommand("saveAs");
         color.addActionListener(this);
         this.add(color);
     }
 
     public void actionPerformed(ActionEvent e) {
-        switch(e.getActionCommand()) {
-        case "color" :
-            Color c = JColorChooser.showDialog(frame, "色の編集", Color.WHITE);
-            model.setColor(c);
-            break;
+        switch (e.getActionCommand()) {
+            case "color":
+                Color c = JColorChooser.showDialog(frame, "色の編集", Color.WHITE);
+                model.setColor(c);
+                break;
+
+            case "saveAs":
+                var fc = new JFileChooser();
+                if (fc.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                    File selected = fc.getSelectedFile();
+                    System.out.println(fc.getName(selected));
+                }
+                break;
+
+            default:
+                break;
         }
     }
 }
