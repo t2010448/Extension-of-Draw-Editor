@@ -42,11 +42,13 @@ class ServerObservable extends Observable implements Serializable{
     }
     // 図形リストに Figure f を追加
     public void addFigure(Figure f) {
-        f.setId(lastId);
-        lastId++;
-        figures.add(f);
-        setChanged();
-        notifyObservers();
+        if(f!=null) {
+            f.setId(lastId);
+            lastId++;
+            figures.add(f);
+            setChanged();
+            notifyObservers();
+        }
     }
     // 図形リストから Figure f を削除
     public void deleteFigure(Figure f) {
