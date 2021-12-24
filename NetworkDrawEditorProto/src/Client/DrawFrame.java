@@ -59,11 +59,7 @@ class Canvas extends JPanel implements Observer {
         }
         Figure f;
         if ((f = model.getDrawingFigure()) != null) {
-            if (model.getMode()!="select") {
-                f.draw(g);
-            }else{
-                model.getHandle().draw(g);
-            }
+            f.draw(g);
         }
     }
 
@@ -131,7 +127,7 @@ class MenuBar extends JMenuBar implements ActionListener {
 class ButtonPanel extends JPanel implements ActionListener {
     protected DrawModel model;
     protected JFrame frame;
-    protected JButton color, saveAs;
+    protected JButton color, saveAs, selectFunc;
 
     public ButtonPanel(DrawModel model, JFrame parent) {
         this.model = model;
@@ -144,11 +140,17 @@ class ButtonPanel extends JPanel implements ActionListener {
         color.addActionListener(this);
         this.add(color);
 
+        icon = new ImageIcon("../src/Client/img/icon_rectangle.jpg");
+        selectFunc = new JButton(icon);
+        selectFunc.setActionCommand("selectFunc");
+        selectFunc.addActionListener(this);
+        this.add(selectFunc);
+
         icon = new ImageIcon("../src/Client/img/icon_save.jpg");
-        color = new JButton(icon);
-        color.setActionCommand("saveAs");
-        color.addActionListener(this);
-        this.add(color);
+        saveAs = new JButton(icon);
+        saveAs.setActionCommand("saveAs");
+        saveAs.addActionListener(this);
+        this.add(saveAs);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -163,6 +165,23 @@ class ButtonPanel extends JPanel implements ActionListener {
                 if (fc.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
                     File selected = fc.getSelectedFile();
                     System.out.println(fc.getName(selected));
+                }
+                break;
+
+            case "selectFunc":
+                String values[] = {"四角", "塗りつぶし四角", "図形選択", "レーザーポインター",};
+                int value = JOptionPane.showOptionDialog(frame, "", "機能選択", JOptionPane.YES_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, values, null);
+                if (value == 0) {
+                    model.setFigShape(FigShape.RECTANGLE);
+                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_rectangle.jpg"));
+                } else if (value == 1) {
+                    model.setFigShape(FigShape.FILLRECT);
+                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_fillrect.jpg"));
+                } else if (value == 2) {
+
+                } else if (value == 3) {
+
                 }
                 break;
 
