@@ -73,6 +73,16 @@ class DrawModel extends Observable{
                 f = new RectangleFigure(x,y,0,0,currentColor);
                 drawingFigure = f;
                 break;
+            case CIRCLE :
+                f = new CircleFigure(x,y,0,0,currentColor);
+                drawingFigure = f;
+                break;
+            case FILLCIRCLE :
+                f = new FillCircleFigure(x,y,0,0,currentColor);
+                drawingFigure = f;
+                break;
+            default:
+                break;
         }
         setChanged();
         notifyObservers();
