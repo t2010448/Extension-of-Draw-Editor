@@ -15,4 +15,14 @@ public class FillCircleFigure extends Figure{
     public FigShape getFigShape() { // 形を返す
         return FigShape.FILLCIRCLE;
     }
+    public boolean judgein(int x, int y) {
+        double rx = width/2, ry = height/2;
+        double cx = this.x+rx, cy = this.y+ry;
+        double px = x - cx, py = rx/ry * (y - cy);
+        if( px*px + py*py <= rx*rx ) {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
