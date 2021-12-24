@@ -33,6 +33,8 @@ class DrawModel extends Observable{
     protected Figure drawingFigure;
     protected Color currentColor;
     protected FigShape currentShape;
+    protected String mode; // 描画:"draw",選択:"select",レーザーポインター:"laser"
+    protected Figure handle; // 選択図形を強調するため＆選択の当たり判定のためのハンドル
 
     public DrawModel(CommClient cc) {
         this.cc = cc;
@@ -40,6 +42,7 @@ class DrawModel extends Observable{
         drawingFigure = null;
         currentColor = Color.BLACK;
         currentShape = FigShape.RECTANGLE;
+        mode = "draw";
     }
 
     public ArrayList<Figure> getFigures() {
@@ -53,6 +56,8 @@ class DrawModel extends Observable{
     }
     public void setDrawingFigure(Figure f) {
         drawingFigure = f;
+        setChanged();
+        notifyObservers();
     }
     public void deleteDrawingFigure() {
         drawingFigure = null;
@@ -95,8 +100,35 @@ class DrawModel extends Observable{
             notifyObservers();
         }
     }
-    public void sendFigure(Figure f) {
-        DataBox dataBox = new DataBox(Command.ADD_FIGURE, f);
+    public void moveFigure(int x, int y) {
+        if (drawingFigure != null) {
+            drawingFigure.setLocation(x, y);
+            setChanged();
+            notifyObservers();
+        }
+    }
+    public Figure selectFigure(int x, int y) {
+        for(ListIterator<Figure> it = figures.listIterator(figures.size()); it.hasPrevious();) {
+            Figure f = it.previous();
+            if(f.judgein(x, y)) {
+                return f;
+            }
+        }
+        return null;
+    }
+    public void setMode(String s) {
+        mode = s;
+    }
+    public String getMode() {
+        return mode;
+    }
+    public void setHandle() {
+        handle = new Handle(drawingFigure);
+    }
+    public Figure getHandle() {
+        return handle;
+    }
+    public void sendData(DataBox dataBox) {
         cc.send(dataBox);
     }
 }
