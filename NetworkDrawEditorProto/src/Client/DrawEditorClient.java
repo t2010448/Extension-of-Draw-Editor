@@ -133,7 +133,11 @@ class DrawModel extends Observable{
         return mode;
     }
     public void setHandle() {
-        handle = new Handle(drawingFigure);
+        if(drawingFigure!=null) {
+            handle = new Handle(drawingFigure);
+        }else{
+            handle = null;
+        }
     }
     public Figure getHandle() {
         return handle;
