@@ -177,25 +177,16 @@ public class DrawController implements MouseListener,MouseMotionListener,KeyList
                 }
                 break;
             
-            // 仮置き (実際はViewでボタンによってモード切り替え？)
-            case 'f':
-                model.setFigShape(FigShape.FILLRECT);
-                break;
-            case 'e':
-                model.setFigShape(FigShape.RECTANGLE);
-                break;
-            case 's' :
-                model.setMode("select");
-                break;
-            case 'd' :
-                model.setMode("draw");
-                break;
+            // 仮置き (実際はViewでボタンによってモード切り替え)
 
-            case 'l' :
+            case 'l' : // レーザーポインタ
                 model.setMode("laser");
-                model.setDrawingFigure(new LaserPointFigure());
-                model.sendData(new DataBox(Command.ADD_FIGURE, model.getDrawingFigure()));
                 break;
+            case 'h': // フリーハンド
+                model.setMode("draw");
+                model.setFigShape(FigShape.FREEHAND);
+                break;
+                
             // ここまで
 
             default :
