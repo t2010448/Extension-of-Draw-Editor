@@ -156,10 +156,10 @@ public class DrawController implements MouseListener,MouseMotionListener,KeyList
         switch(model.getMode()) {
             case "laser" :
                 if(model.getDrawingFigure()==null) {
-                    Figure f = model.selectFigure(-5, -5);
+                    Figure f = model.selectFigure(-8, -8);
                     model.setDrawingFigure(f);
                 }else{
-                    model.moveFigure(e.getX()-5, e.getY()-5);
+                    model.moveFigure(e.getX()-8, e.getY()-8);
                     model.sendData(new DataBox(Command.REPLACE_FIGURE, model.getDrawingFigure()));
                 }
                 break;
