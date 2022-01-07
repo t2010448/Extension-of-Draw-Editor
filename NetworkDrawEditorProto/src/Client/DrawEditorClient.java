@@ -119,6 +119,7 @@ class DrawModel extends Observable{
                     setChanged();
                     notifyObservers();
                 }
+                break;
         }
     }
     public void moveFigure(int x, int y) {
