@@ -12,9 +12,6 @@ public class RectangleFigure extends Figure {
         g.setColor(color);
         g.drawRect(x,y,width,height);
     }
-    public FigShape getFigShape() { // 形を返す 
-        return FigShape.RECTANGLE;
-    }
     public boolean judgein(int x, int y) {
         int r = 6;
         if( ( (this.x-r <= x && x <= this.x+this.width+r) && (this.y-r <= y && y <= this.y+this.height+r) ) &&
