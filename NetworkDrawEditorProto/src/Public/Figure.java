@@ -68,9 +68,5 @@ public class Figure implements Serializable{
     public boolean judgein(int x, int y) {
         return false;
     }
-
-    // 形の名称を(FigShapeクラスで)返す
-    public FigShape getShape() { 
-        return null;
-    }
+    
 }
