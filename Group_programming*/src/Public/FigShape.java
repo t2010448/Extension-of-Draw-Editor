@@ -7,5 +7,5 @@ public enum FigShape {
     CIRCLE,
     FILLCIRCLE,
     FREEHAND,
-    LaserPoint
+    LASERPOINT
 }

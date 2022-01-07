@@ -1,12 +1,12 @@
 package Client;
 
-import javax.swing.*;
-
 import Public.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.io.File;
 
 ////////////////////////////////////////////
 // View
@@ -21,13 +21,16 @@ public class DrawFrame extends JFrame {
         this.setTitle("Draw Editor");
         this.setSize(1000,800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new FlowLayout(FlowLayout.LEFT));
+        this.setLayout(new BorderLayout());
 
-        Canvas canvas = new Canvas(model,cont);
-        this.add(canvas);
-
-        MenuBar menuBar = new MenuBar(model,cont,this);
+        MenuBar menuBar = new MenuBar(model, cont, this);
         this.setJMenuBar(menuBar);
+
+        Canvas canvas = new Canvas(model, cont);
+        this.add(BorderLayout.CENTER, canvas);
+
+        ButtonPanel buttons = new ButtonPanel(model, this);
+        this.add(BorderLayout.SOUTH, buttons);
 
         this.setVisible(true);
     }
@@ -55,7 +58,11 @@ class Canvas extends JPanel implements Observer {
         }
         Figure f;
         if((f=model.getDrawingFigure()) != null) {
-            f.draw(g);
+            if (model.getMode()!="select") {
+                f.draw(g);
+            }else{
+                model.getHandle().draw(g);
+            }
         }
     }
     public void update(Observable o,Object arg) {
@@ -77,7 +84,7 @@ class MenuBar extends JMenuBar implements ActionListener {
         file = new JMenu("ファイル");
         edit = new JMenu("編集");
         color = new JMenu("描画");
-        fileNew  = new JMenuItem("新規作成");
+        fileNew = new JMenuItem("新規作成");
         fileOpen = new JMenuItem("開く");
         fileSave = new JMenuItem("上書き保存");
         fileSaveAs = new JMenuItem("名前を付けて保存");
@@ -93,15 +100,113 @@ class MenuBar extends JMenuBar implements ActionListener {
         fileNew.addActionListener(cont);
         fileOpen.addActionListener(cont);
         fileSave.addActionListener(cont);
-        fileSaveAs.addActionListener(cont);
+        fileSaveAs.addActionListener(this);
+        fileSaveAs.setActionCommand("fileSaveAs");
         colorChooser.addActionListener(this);
         colorChooser.setActionCommand("colorChooser");
     }
     public void actionPerformed(ActionEvent e) {
-        switch(e.getActionCommand()){
-            case "colorChooser" :
+        switch (e.getActionCommand()) {
+            case "colorChooser":
                 Color c = JColorChooser.showDialog(frame, "色の編集", Color.WHITE);
                 model.setColor(c);
+                break;
+
+            case "fileSaveAs":
+                var fc = new JFileChooser();
+                if (fc.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                    File selected = fc.getSelectedFile();
+                    System.out.println(fc.getName(selected));
+                }
+                break;
+        }
+    }
+}
+
+class ButtonPanel extends JPanel implements ActionListener {
+    protected DrawModel model;
+    protected JFrame frame;
+    protected JButton color, saveAs, selectFunc;
+
+    public ButtonPanel(DrawModel model, JFrame parent) {
+        this.model = model;
+        this.frame = parent;
+        this.setBackground(Color.GRAY);
+
+        var icon = new ImageIcon("../src/Client/img/icon_color.jpg");
+        color = new JButton(icon);
+        color.setActionCommand("color");
+        color.addActionListener(this);
+        this.add(color);
+
+        icon = new ImageIcon("../src/Client/img/icon_rectangle.jpg");
+        selectFunc = new JButton(icon);
+        selectFunc.setActionCommand("selectFunc");
+        selectFunc.addActionListener(this);
+        this.add(selectFunc);
+
+        icon = new ImageIcon("../src/Client/img/icon_save.jpg");
+        saveAs = new JButton(icon);
+        saveAs.setActionCommand("saveAs");
+        saveAs.addActionListener(this);
+        this.add(saveAs);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()) {
+            case "color":
+                Color c = JColorChooser.showDialog(frame, "色の編集", Color.WHITE);
+                model.setColor(c);
+                break;
+
+            case "saveAs":
+                var fc = new JFileChooser();
+                if (fc.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                    File selected = fc.getSelectedFile();
+                    System.out.println(fc.getName(selected));
+                }
+                break;
+
+            case "selectFunc":
+                String values[] = {
+                    "四角",
+                    "塗りつぶし四角",
+                    "丸",
+                    "塗りつぶし丸",
+                    "図形選択",
+                    "レーザーポインター",
+                };
+
+                String value = (String)JOptionPane.showInputDialog(
+                    frame,
+                    "ツールを選択してください",
+                    "ツール選択",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    values,
+                    null
+                );
+                if (value == values[0]) {
+                    model.setMode("draw");
+                    model.setFigShape(FigShape.RECTANGLE);
+                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_rectangle.jpg"));
+                } else if (value == values[1]) {
+                    model.setMode("draw");
+                    model.setFigShape(FigShape.FILLRECT);
+                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_fillrect.jpg"));
+                } else if (value == values[2]) {
+                    model.setMode("draw");
+                    model.setFigShape(FigShape.CIRCLE);
+                } else if (value == values[3]) {
+                    model.setMode("draw");
+                    model.setFigShape(FigShape.FILLCIRCLE);
+                } else if (value == values[4]) {
+                    model.setMode("select");
+                }
+                break;
+
+            default:
+                break;
         }
     }
 }

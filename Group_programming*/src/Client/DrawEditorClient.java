@@ -1,12 +1,9 @@
 package Client;
 
-import java.awt.*;
-import java.util.*;
-
-import javax.xml.crypto.Data;
-
 import Public.*;
 
+import java.awt.*;
+import java.util.*;
 import java.io.*;
 
 ////////////////////////////////////////////
@@ -37,6 +34,8 @@ class DrawModel extends Observable{
     protected Figure drawingFigure;
     protected Color currentColor;
     protected FigShape currentShape;
+    protected String mode; // 描画:"draw",選択:"select",レーザーポインター:"laser"
+    protected Figure handle; // 選択図形を強調するため＆選択の当たり判定のためのハンドル
 
     public DrawModel(CommClient cc) {
         this.cc = cc;
@@ -44,6 +43,7 @@ class DrawModel extends Observable{
         drawingFigure = null;
         currentColor = Color.BLACK;
         currentShape = FigShape.RECTANGLE;
+        mode = "draw";
     }
 
     public ArrayList<Figure> getFigures() {
@@ -52,17 +52,27 @@ class DrawModel extends Observable{
     public Figure getFigure(int idx) {
         return figures.get(idx);
     }
-    public void deleteFigure(Figure f) {
-        figures.remove(f);
-    }
     public Figure getDrawingFigure() {
         return drawingFigure;
     }
+    public void setFigures(ArrayList<Figure> figList) {
+        figures = figList;
+        setChanged();
+        notifyObservers();
+    }
     public void setDrawingFigure(Figure f) {
         drawingFigure = f;
+        setChanged();
+        notifyObservers();
     }
-    public void deleteDrawingFigure() {
-        drawingFigure = null;
+    public void setColor(Color c) {
+        currentColor = c;
+    }
+    public void setFigShape(FigShape s) {
+        currentShape = s;
+    }
+    public void deleteFigure(Figure f) {
+        figures.remove(f);
     }
     public void createFigure(int x,int y) {
         Figure f;
@@ -79,16 +89,11 @@ class DrawModel extends Observable{
                 f = new FreeHandFigure(x,y,currentColor);
                 drawingFigure = f;
                 break;
-            case LaserPoint :
-                f = new LaserPointFigure();
+            case LASERPOINT :
+                f = new LaserPointFigure(x,y,currentColor);
                 drawingFigure = f;
                 break;
         }
-        setChanged();
-        notifyObservers();
-    }
-    public void setFigures(ArrayList<Figure> figList) {
-        figures = figList;
         setChanged();
         notifyObservers();
     }
@@ -97,16 +102,11 @@ class DrawModel extends Observable{
         setChanged();
         notifyObservers();
     }
-    public void setColor(Color c) {
-        currentColor = c;
-    }
-    public void setFigShape(FigShape s) {
-        currentShape = s;
-    }
     public void reshapeFigure(int x1,int y1,int x2,int y2) {
         switch(currentShape) {
             case FREEHAND :
-                (FreeHandFigure)drawingFigure.writeFreeHand(x2,y2);
+                FreeHandFigure f = (FreeHandFigure) drawingFigure; 
+                f.writeFreeHand(x2,y2);
                 setChanged();
                 notifyObservers();
                 break;
@@ -119,16 +119,11 @@ class DrawModel extends Observable{
         }
     }
     public void moveFigure(int x, int y) {
-        drawingFigure.setLocation(x, y);
-        setChanged();
-        notifyObservers();
-    }
-    public void sendFigure(Figure f) {
-        DataBox dataBox = new DataBox(Command.ADD_FIGURE, f);
-        cc.send(dataBox);
-    }
-    public void senddata(DataBox d) {
-        cc.send(d);
+        if (drawingFigure != null) {
+            drawingFigure.setLocation(x, y);
+            setChanged();
+            notifyObservers();
+        }
     }
     public Figure selectFigure(int x, int y) {
         for(ListIterator<Figure> it = figures.listIterator(figures.size()); it.hasPrevious();) {
@@ -139,7 +134,35 @@ class DrawModel extends Observable{
         }
         return null;
     }
+    public void setMode(String s) {
+        mode = s;
+    }
+    public String getMode() {
+        return mode;
+    }
+    public void setHandle() {
+        if(drawingFigure!=null) {
+            handle = new Handle(drawingFigure);
+        }else{
+            handle = null;
+        }
+    }
+    public Figure getHandle() {
+        return handle;
+    }
+    public void sendFigure(Figure f) {
+        DataBox dataBox = new DataBox(Command.ADD_FIGURE, f);
+        cc.send(dataBox);
+    }
+    public void sendData(DataBox d) {
+        cc.send(d);
+    }
+    public void sendData(ArrayList<Figure> f) {
+        DataBox dataBox = new DataBox(Command.SET_FIGURES, f);
+        cc.send(dataBox);
+    }
 
+    // ファイルセーブ
     public void writeFile(String filename) {
         try {
             FileOutputStream f = new FileOutputStream(new File(filename));
@@ -151,14 +174,17 @@ class DrawModel extends Observable{
             System.out.println("Error initializing stream");
         }
     }
+    //ファイルロード
     public void readFile(String filename) {
         try {
             FileInputStream fi = new FileInputStream(new File(filename));
             ObjectInputStream oi = new ObjectInputStream(fi);
             figures.clear();
-            setFigures((ArrayList<Figure>) oi.readObject());
+            sendData((ArrayList<Figure>) oi.readObject());
             fi.close();
             oi.close();
+            setChanged();
+            notifyObservers();
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {
@@ -168,4 +194,5 @@ class DrawModel extends Observable{
             e.printStackTrace();
         }
     }
+
 }

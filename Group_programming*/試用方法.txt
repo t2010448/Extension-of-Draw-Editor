@@ -15,3 +15,14 @@
     保存
 ・l
     呼び出し
+・p
+    ポインタ
+・h
+    FreeHandff
+
+java -cp bin Server/DrawEditorServer
+
+java -cp bin Client/DrawEditorClient
+
+javac -d ../bin Public/*.java
+javac -d ../bin Client/*.java
