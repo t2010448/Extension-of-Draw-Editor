@@ -133,6 +133,9 @@ class ButtonPanel extends JPanel implements ActionListener {
     protected JFrame frame;
     protected JButton color, saveAs, selectFunc;
 
+    private final String[] TOOLS;
+    private String ptool;
+
     public ButtonPanel(DrawModel model, JFrame parent) {
         this.model = model;
         this.frame = parent;
@@ -155,6 +158,16 @@ class ButtonPanel extends JPanel implements ActionListener {
         saveAs.setActionCommand("saveAs");
         saveAs.addActionListener(this);
         this.add(saveAs);
+
+        TOOLS = new String[] {
+            "四角",
+            "塗りつぶし四角",
+            "丸",
+            "塗りつぶし丸",
+            "図形選択",
+            "レーザーポインター",
+        };
+        ptool = TOOLS[0];
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -173,39 +186,35 @@ class ButtonPanel extends JPanel implements ActionListener {
                 break;
 
             case "selectFunc":
-                String values[] = {
-                    "四角",
-                    "塗りつぶし四角",
-                    "丸",
-                    "塗りつぶし丸",
-                    "図形選択",
-                    "レーザーポインター",
-                };
-
                 String value = (String)JOptionPane.showInputDialog(
                     frame,
                     "ツールを選択してください",
                     "ツール選択",
                     JOptionPane.QUESTION_MESSAGE,
                     null,
-                    values,
-                    null
+                    TOOLS,
+                    ptool
                 );
-                if (value == values[0]) {
+                if(value == null)
+                    break;
+                else
+                    ptool = value;
+                    
+                if (ptool == TOOLS[0]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.RECTANGLE);
                     selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_rectangle.jpg"));
-                } else if (value == values[1]) {
+                } else if (ptool == TOOLS[1]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.FILLRECT);
                     selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_fillrect.jpg"));
-                } else if (value == values[2]) {
+                } else if (ptool == TOOLS[2]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.CIRCLE);
-                } else if (value == values[3]) {
+                } else if (ptool == TOOLS[3]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.FILLCIRCLE);
-                } else if (value == values[4]) {
+                } else if (ptool == TOOLS[4]) {
                     model.setMode("select");
                 }
                 break;
