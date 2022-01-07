@@ -28,7 +28,7 @@ public class DataReceiver {
                     ArrayList<Figure> figL = dataBox.getFigList();
                     model.setFigures(figL);
                     // 図形選択中の場合、選択していた図形と同じIDの図形を選択しなおす(変形されている場合に備えて)
-                    if(model.getMode()=="select" && model.getDrawingFigure()!=null) {
+                    if((model.getMode()=="select" || model.getMode() == "laser") && model.getDrawingFigure()!=null) {
                         int i;
                         for (i = 0; i < figL.size(); i++) {
                             if(model.getDrawingFigure().getId() == figL.get(i).getId()) {
