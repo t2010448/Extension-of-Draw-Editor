@@ -130,6 +130,9 @@ class DrawModel extends Observable{
         if(mode == "laser"){ // レーザーポインタから変える場合はレーザーポインタを削除
             sendData(new DataBox(Command.DELETE_FIGURE, drawingFigure));
             setDrawingFigure(null);
+        }else if(s == "laser") { // レーザーポインタに変える場合はレーザーポインタを作成
+            setDrawingFigure(new LaserPointFigure());
+            sendData(new DataBox(Command.ADD_FIGURE, drawingFigure));
         }
         mode = s;
     }
