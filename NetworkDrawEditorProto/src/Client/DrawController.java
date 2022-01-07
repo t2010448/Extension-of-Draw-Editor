@@ -152,7 +152,21 @@ public class DrawController implements MouseListener,MouseMotionListener,KeyList
     }
     public void mouseEntered(MouseEvent e) { }
     public void mouseExited(MouseEvent e) { }
-    public void mouseMoved(MouseEvent e) { }
+    public void mouseMoved(MouseEvent e) {
+        switch(model.getMode()) {
+            case "laser" :
+                if(model.getDrawingFigure()==null) {
+                    Figure f = model.selectFigure(-5, -5);
+                    model.setDrawingFigure(f);
+                }else{
+                    model.moveFigure(e.getX()-5, e.getY()-5);
+                    model.sendData(new DataBox(Command.REPLACE_FIGURE, model.getDrawingFigure()));
+                }
+                break;
+            default :
+                break;
+        }
+    }
 
     public void keyTyped(KeyEvent e) {
         switch(e.getKeyChar()) {
@@ -175,6 +189,12 @@ public class DrawController implements MouseListener,MouseMotionListener,KeyList
                 break;
             case 'd' :
                 model.setMode("draw");
+                break;
+
+            case 'l' :
+                model.setMode("laser");
+                model.setDrawingFigure(new LaserPointFigure());
+                model.sendData(new DataBox(Command.ADD_FIGURE, model.getDrawingFigure()));
                 break;
             // ここまで
 
