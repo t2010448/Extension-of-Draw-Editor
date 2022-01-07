@@ -12,9 +12,6 @@ public class CircleFigure extends Figure{
         g.setColor(color);
         g.drawOval(x,y,width,height);
     }
-    public FigShape getFigShape() { // 形を返す
-        return FigShape.CIRCLE;
-    }
     public boolean judgein(int x, int y) {
         double rx = width/2, ry = height/2;
         double cx = this.x+rx, cy = this.y+ry; 
