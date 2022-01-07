@@ -8,11 +8,15 @@ public class LaserPointFigure extends Figure {
         super(x,y,w,h,c);
     }
     public LaserPointFigure() {
-        super(-10,-10,10,10,Color.RED);
+        super(-16,-16,16,16,Color.RED);
     }
     public void draw(Graphics g) {
-        g.setColor(color);
+        g.setColor(Color.RED);
         g.fillOval(x,y,width,height);
+        g.setColor(new Color(255, 150, 150));
+        g.fillOval(x+4, y+4, width-8, height-8);
+        g.setColor(Color.WHITE);
+        g.fillOval(x+6, y+6, width-12, height-12);
     }
     public boolean judgein(int x, int y) {
         double rx = width/2, ry = height/2;
