@@ -127,6 +127,10 @@ class DrawModel extends Observable{
         return null;
     }
     public void setMode(String s) {
+        if(mode == "laser"){ // レーザーポインタから変える場合はレーザーポインタを削除
+            sendData(new DataBox(Command.DELETE_FIGURE, drawingFigure));
+            setDrawingFigure(null);
+        }
         mode = s;
     }
     public String getMode() {
