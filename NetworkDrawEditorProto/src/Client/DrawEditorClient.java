@@ -108,11 +108,13 @@ class DrawModel extends Observable{
     public void reshapeFigure(int x1,int y1,int x2,int y2) {
         switch(currentShape) {
             case FREEHAND :
-                FreeHandFigure f = (FreeHandFigure) drawingFigure; 
-                f.writeFreeHand(x2,y2);
-                setChanged();
-                notifyObservers();
-                break;
+                if(mode == "draw") { // draw モード以外の時は default へ
+                    FreeHandFigure f = (FreeHandFigure) drawingFigure; 
+                    f.writeFreeHand(x2,y2);
+                    setChanged();
+                    notifyObservers();
+                    break;
+                }
             default :
                 if (drawingFigure != null) {
                     drawingFigure.reshape(x1,y1,x2,y2);
