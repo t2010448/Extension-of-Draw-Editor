@@ -14,9 +14,6 @@ public class LaserPointFigure extends Figure {
         g.setColor(color);
         g.fillOval(x,y,width,height);
     }
-    public FigShape getFigShape() { // 形を返す
-        return FigShape.LASERPOINT;
-    }
     public boolean judgein(int x, int y) {
         double rx = width/2, ry = height/2;
         double cx = this.x+rx, cy = this.y+ry;
