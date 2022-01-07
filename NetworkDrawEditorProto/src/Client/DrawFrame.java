@@ -59,9 +59,9 @@ class Canvas extends JPanel implements Observer {
         }
         Figure f;
         if ((f = model.getDrawingFigure()) != null) {
-            if (model.getMode()!="select") {
+            if (model.getMode() != "select") {
                  f.draw(g);
-             }else{
+             } else {
                  model.getHandle().draw(g);
              }
         }
@@ -131,7 +131,7 @@ class MenuBar extends JMenuBar implements ActionListener {
 class ButtonPanel extends JPanel implements ActionListener {
     protected DrawModel model;
     protected JFrame frame;
-    protected JButton color, saveAs, selectFunc;
+    protected JButton color, selectFunc, saveAs, load;
 
     private final String[] TOOLS;
     private String ptool;
@@ -159,11 +159,18 @@ class ButtonPanel extends JPanel implements ActionListener {
         saveAs.addActionListener(this);
         this.add(saveAs);
 
+        icon = new ImageIcon("../src/Client/img/icon_load.jpg");
+        load = new JButton(icon);
+        load.setActionCommand("load");
+        load.addActionListener(this);
+        this.add(load);
+
         TOOLS = new String[] {
             "四角",
             "塗りつぶし四角",
             "丸",
             "塗りつぶし丸",
+            "フリーハンド",
             "図形選択",
             "レーザーポインター",
         };
@@ -178,10 +185,18 @@ class ButtonPanel extends JPanel implements ActionListener {
                 break;
 
             case "saveAs":
-                var fc = new JFileChooser();
-                if (fc.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
-                    File selected = fc.getSelectedFile();
-                    System.out.println(fc.getName(selected));
+                var fcsave = new JFileChooser();
+                if (fcsave.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                    File selected = fcsave.getSelectedFile();
+                    model.writeFile(selected.toString());
+                }
+                break;
+
+            case "load":
+                var fcload = new JFileChooser();
+                if (fcload.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                    File selected = fcload.getSelectedFile();
+                    model.readFile(selected.toString());
                 }
                 break;
 
@@ -211,11 +226,21 @@ class ButtonPanel extends JPanel implements ActionListener {
                 } else if (ptool == TOOLS[2]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.CIRCLE);
+                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_circle.jpg"));
                 } else if (ptool == TOOLS[3]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.FILLCIRCLE);
+                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_fillcircle.jpg"));
                 } else if (ptool == TOOLS[4]) {
+                    model.setMode("draw");
+                    model.setFigShape(FigShape.FREEHAND);
+                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_freehand.jpg"));
+                } else if (ptool == TOOLS[5]) {
                     model.setMode("select");
+                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_select.jpg"));
+                } else if (ptool == TOOLS[6]) {
+                    model.setMode("laser");
+                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_pointer.jpg"));
                 }
                 break;
 
