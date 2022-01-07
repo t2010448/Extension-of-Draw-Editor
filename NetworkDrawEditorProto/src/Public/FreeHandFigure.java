@@ -17,9 +17,6 @@ public class FreeHandFigure extends Figure {
             g.fillOval(f.x, f.y, width, height);
         }
     }
-    public FigShape getFigShape() { // 形を返す 
-        return FigShape.RECTANGLE;
-    }
     public void writeFreeHand(int x1, int y1) { //Arraylistに点を追加していく
         Figure f = new FillCircleFigure(x1, y1, width, height, color);
         dots.add(f);
