@@ -3,6 +3,7 @@ package Client;
 import Public.*;
 
 import java.awt.*;
+import java.io.*;
 import java.util.*;
 
 ////////////////////////////////////////////
@@ -59,9 +60,6 @@ class DrawModel extends Observable{
         setChanged();
         notifyObservers();
     }
-    public void deleteDrawingFigure() {
-        drawingFigure = null;
-    }
     public void createFigure(int x,int y) {
         Figure f;
         switch(currentShape) {
@@ -79,6 +77,10 @@ class DrawModel extends Observable{
                 break;
             case FILLCIRCLE :
                 f = new FillCircleFigure(x,y,0,0,currentColor);
+                drawingFigure = f;
+                break;
+            case FREEHAND :
+                f = new FreeHandFigure(x,y,currentColor);
                 drawingFigure = f;
                 break;
             default:
@@ -104,10 +106,19 @@ class DrawModel extends Observable{
         currentShape = s;
     }
     public void reshapeFigure(int x1,int y1,int x2,int y2) {
-        if (drawingFigure != null) {
-            drawingFigure.reshape(x1,y1,x2,y2);
-            setChanged();
-            notifyObservers();
+        switch(currentShape) {
+            case FREEHAND :
+                FreeHandFigure f = (FreeHandFigure) drawingFigure; 
+                f.writeFreeHand(x2,y2);
+                setChanged();
+                notifyObservers();
+                break;
+            default :
+                if (drawingFigure != null) {
+                    drawingFigure.reshape(x1,y1,x2,y2);
+                    setChanged();
+                    notifyObservers();
+                }
         }
     }
     public void moveFigure(int x, int y) {
@@ -152,5 +163,38 @@ class DrawModel extends Observable{
     }
     public void sendData(DataBox dataBox) {
         cc.send(dataBox);
+    }
+
+    // ファイルセーブ
+    public void writeFile(String filename) {
+        try {
+            FileOutputStream f = new FileOutputStream(new File(filename));
+            ObjectOutputStream o = new ObjectOutputStream(f);
+            o.writeObject(figures);
+            o.close();
+            f.close();
+        } catch (IOException e) {
+            System.out.println("Error initializing stream");
+        }
+    }
+    //ファイルロード
+    public void readFile(String filename) {
+        try {
+            FileInputStream fi = new FileInputStream(new File(filename));
+            ObjectInputStream oi = new ObjectInputStream(fi);
+            figures.clear();
+            sendData(new DataBox(Command.SET_FIGURES, (ArrayList<Figure>) oi.readObject()));
+            fi.close();
+            oi.close();
+            setChanged();
+            notifyObservers();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("Error initializing stream");
+        } catch (ClassNotFoundException e) {
+            //TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
