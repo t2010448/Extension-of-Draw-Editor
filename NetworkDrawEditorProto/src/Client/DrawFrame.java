@@ -173,19 +173,40 @@ class ButtonPanel extends JPanel implements ActionListener {
                 break;
 
             case "selectFunc":
-                String values[] = {"四角", "塗りつぶし四角", "図形選択", "レーザーポインター",};
-                int value = JOptionPane.showOptionDialog(frame, "", "機能選択", JOptionPane.YES_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, values, null);
-                if (value == 0) {
+                String values[] = {
+                    "四角",
+                    "塗りつぶし四角",
+                    "丸",
+                    "塗りつぶし丸",
+                    "図形選択",
+                    "レーザーポインター",
+                };
+
+                String value = (String)JOptionPane.showInputDialog(
+                    frame,
+                    "ツールを選択してください",
+                    "ツール選択",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    values,
+                    null
+                );
+                if (value == values[0]) {
+                    model.setMode("draw");
                     model.setFigShape(FigShape.RECTANGLE);
                     selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_rectangle.jpg"));
-                } else if (value == 1) {
+                } else if (value == values[1]) {
+                    model.setMode("draw");
                     model.setFigShape(FigShape.FILLRECT);
                     selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_fillrect.jpg"));
-                } else if (value == 2) {
-
-                } else if (value == 3) {
-
+                } else if (value == values[2]) {
+                    model.setMode("draw");
+                    model.setFigShape(FigShape.CIRCLE);
+                } else if (value == values[3]) {
+                    model.setMode("draw");
+                    model.setFigShape(FigShape.FILLCIRCLE);
+                } else if (value == values[4]) {
+                    model.setMode("select");
                 }
                 break;
 
