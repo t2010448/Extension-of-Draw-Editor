@@ -23,9 +23,6 @@ public class DrawFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
 
-        MenuBar menuBar = new MenuBar(model, cont, this);
-        this.setJMenuBar(menuBar);
-
         Canvas canvas = new Canvas(model, cont);
         this.add(BorderLayout.CENTER, canvas);
 
@@ -73,65 +70,10 @@ class Canvas extends JPanel implements Observer {
 }
 
 
-class MenuBar extends JMenuBar implements ActionListener {
-    protected DrawModel model;
-    protected DrawController cont;
-    protected DrawFrame frame;
-    protected JMenu file, edit, color;
-    protected JMenuItem fileNew, fileOpen, fileSave, fileSaveAs, colorChooser;
-
-    MenuBar(DrawModel m, DrawController c, DrawFrame f) {
-        model = m;
-        cont = c;
-        frame = f;
-        file = new JMenu("ファイル");
-        edit = new JMenu("編集");
-        color = new JMenu("描画");
-        fileNew = new JMenuItem("新規作成");
-        fileOpen = new JMenuItem("開く");
-        fileSave = new JMenuItem("上書き保存");
-        fileSaveAs = new JMenuItem("名前を付けて保存");
-        colorChooser = new JMenuItem("色の編集");
-        this.add(file);
-        this.add(edit);
-        this.add(color);
-        file.add(fileNew);
-        file.add(fileOpen);
-        file.add(fileSave);
-        file.add(fileSaveAs);
-        color.add(colorChooser);
-        fileNew.addActionListener(cont);
-        fileOpen.addActionListener(cont);
-        fileSave.addActionListener(cont);
-        fileSaveAs.addActionListener(this);
-        fileSaveAs.setActionCommand("fileSaveAs");
-        colorChooser.addActionListener(this);
-        colorChooser.setActionCommand("colorChooser");
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "colorChooser":
-                Color c = JColorChooser.showDialog(frame, "色の編集", Color.WHITE);
-                model.setColor(c);
-                break;
-
-            case "fileSaveAs":
-                var fc = new JFileChooser();
-                if (fc.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
-                    File selected = fc.getSelectedFile();
-                    System.out.println(fc.getName(selected));
-                }
-                break;
-        }
-    }
-}
-
-
 class ButtonPanel extends JPanel implements ActionListener {
     protected DrawModel model;
     protected JFrame frame;
-    protected JButton color, selectFunc, saveAs, load;
+    protected JButton color, selectFunc, clear, saveAs, load;
 
     private final String[] TOOLS;
     private String ptool;
@@ -152,6 +94,12 @@ class ButtonPanel extends JPanel implements ActionListener {
         selectFunc.setActionCommand("selectFunc");
         selectFunc.addActionListener(this);
         this.add(selectFunc);
+
+        icon = new ImageIcon("../src/Client/img/icon_clear.jpg");
+        clear = new JButton(icon);
+        clear.setActionCommand("clear");
+        clear.addActionListener(this);
+        this.add(clear);
 
         icon = new ImageIcon("../src/Client/img/icon_save.jpg");
         saveAs = new JButton(icon);
@@ -182,6 +130,23 @@ class ButtonPanel extends JPanel implements ActionListener {
             case "color":
                 Color c = JColorChooser.showDialog(frame, "色の編集", Color.WHITE);
                 model.setColor(c);
+                break;
+
+            case "clear":
+                if (model.getMode() == "select" && model.getDrawingFigure() != null) {
+                    model.sendData(new DataBox(Command.DELETE_FIGURE, model.getDrawingFigure()));
+                    model.setDrawingFigure(null);
+                } else {
+                    int value = JOptionPane.showConfirmDialog(
+                        frame,
+                        "全てのオブジェクトを削除してもよろしいですか？",
+                        "全消去",
+                        JOptionPane.OK_CANCEL_OPTION
+                    );
+                    if (value == JOptionPane.OK_OPTION) {
+                        System.out.println("all clear");    // TODO 全ての図形を削除
+                    }
+                }
                 break;
 
             case "saveAs":
