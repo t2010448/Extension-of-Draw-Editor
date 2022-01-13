@@ -1,14 +1,11 @@
 compile:
-	@cd src && \
-	javac -d ../bin/ Public/*.java && \
-	javac -d ../bin/ Server/*.java && \
-	javac -d ../bin/ Client/*.java
+	@javac -d bin -sourcepath src src/Public/*.java
+	@javac -d bin -sourcepath src src/Server/*.java
+	@javac -d bin -sourcepath src src/Client/*.java
 	@echo 'Compile successfully done.'
 
 server:
-	@cd bin && \
-	java Server.DrawEditorServer
+	@java -classpath bin Server.DrawEditorServer
 
 client:
-	@cd bin && \
-	java Client.DrawEditorClient
+	@java -classpath bin Client.DrawEditorClient
