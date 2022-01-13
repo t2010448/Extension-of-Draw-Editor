@@ -87,30 +87,35 @@ class ButtonPanel extends JPanel implements ActionListener {
         color = new JButton(icon);
         color.setActionCommand("color");
         color.addActionListener(this);
+        color.setToolTipText("色を編集");
         this.add(color);
 
         icon = new ImageIcon("../src/Client/img/icon_rectangle.jpg");
         selectFunc = new JButton(icon);
         selectFunc.setActionCommand("selectFunc");
         selectFunc.addActionListener(this);
+        selectFunc.setToolTipText("ツールを選択");
         this.add(selectFunc);
 
         icon = new ImageIcon("../src/Client/img/icon_clear.jpg");
         clear = new JButton(icon);
         clear.setActionCommand("clear");
         clear.addActionListener(this);
+        clear.setToolTipText("図形を削除");
         this.add(clear);
 
         icon = new ImageIcon("../src/Client/img/icon_save.jpg");
         saveAs = new JButton(icon);
         saveAs.setActionCommand("saveAs");
         saveAs.addActionListener(this);
+        saveAs.setToolTipText("保存");
         this.add(saveAs);
 
         icon = new ImageIcon("../src/Client/img/icon_load.jpg");
         load = new JButton(icon);
         load.setActionCommand("load");
         load.addActionListener(this);
+        load.setToolTipText("読み込み");
         this.add(load);
 
         TOOLS = new String[] {
