@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-import java.io.File;
+import java.io.*;
 
 ////////////////////////////////////////////
 // View
@@ -83,35 +83,35 @@ class ButtonPanel extends JPanel implements ActionListener {
         this.frame = parent;
         this.setBackground(Color.GRAY);
 
-        var icon = new ImageIcon("../src/Client/img/icon_color.jpg");
+        var icon = new ImageIcon("resourses/icon_color.jpg");
         color = new JButton(icon);
         color.setActionCommand("color");
         color.addActionListener(this);
         color.setToolTipText("色を編集");
         this.add(color);
 
-        icon = new ImageIcon("../src/Client/img/icon_rectangle.jpg");
+        icon = new ImageIcon("resourses/icon_rectangle.jpg");
         selectFunc = new JButton(icon);
         selectFunc.setActionCommand("selectFunc");
         selectFunc.addActionListener(this);
         selectFunc.setToolTipText("ツールを選択");
         this.add(selectFunc);
 
-        icon = new ImageIcon("../src/Client/img/icon_clear.jpg");
+        icon = new ImageIcon("resourses/icon_clear.jpg");
         clear = new JButton(icon);
         clear.setActionCommand("clear");
         clear.addActionListener(this);
         clear.setToolTipText("図形を削除");
         this.add(clear);
 
-        icon = new ImageIcon("../src/Client/img/icon_save.jpg");
+        icon = new ImageIcon("resourses/icon_save.jpg");
         saveAs = new JButton(icon);
         saveAs.setActionCommand("saveAs");
         saveAs.addActionListener(this);
         saveAs.setToolTipText("保存");
         this.add(saveAs);
 
-        icon = new ImageIcon("../src/Client/img/icon_load.jpg");
+        icon = new ImageIcon("resourses/icon_load.jpg");
         load = new JButton(icon);
         load.setActionCommand("load");
         load.addActionListener(this);
@@ -188,29 +188,29 @@ class ButtonPanel extends JPanel implements ActionListener {
                 if (ptool == TOOLS[0]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.RECTANGLE);
-                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_rectangle.jpg"));
+                    selectFunc.setIcon(new ImageIcon("resourses/icon_rectangle.jpg"));
                 } else if (ptool == TOOLS[1]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.FILLRECT);
-                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_fillrect.jpg"));
+                    selectFunc.setIcon(new ImageIcon("resourses/icon_fillrect.jpg"));
                 } else if (ptool == TOOLS[2]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.CIRCLE);
-                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_circle.jpg"));
+                    selectFunc.setIcon(new ImageIcon("resourses/icon_circle.jpg"));
                 } else if (ptool == TOOLS[3]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.FILLCIRCLE);
-                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_fillcircle.jpg"));
+                    selectFunc.setIcon(new ImageIcon("resourses/icon_fillcircle.jpg"));
                 } else if (ptool == TOOLS[4]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.FREEHAND);
-                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_freehand.jpg"));
+                    selectFunc.setIcon(new ImageIcon("resourses/icon_freehand.jpg"));
                 } else if (ptool == TOOLS[5]) {
                     model.setMode("select");
-                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_select.jpg"));
+                    selectFunc.setIcon(new ImageIcon("resourses/icon_select.jpg"));
                 } else if (ptool == TOOLS[6]) {
                     model.setMode("laser");
-                    selectFunc.setIcon(new ImageIcon("../src/Client/img/icon_pointer.jpg"));
+                    selectFunc.setIcon(new ImageIcon("resourses/icon_pointer.jpg"));
                 }
                 break;
 
