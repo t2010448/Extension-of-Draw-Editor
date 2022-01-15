@@ -149,7 +149,10 @@ class ButtonPanel extends JPanel implements ActionListener {
                         JOptionPane.OK_CANCEL_OPTION
                     );
                     if (value == JOptionPane.OK_OPTION) {
-                        System.out.println("all clear");    // TODO 全ての図形を削除
+                        // model.setFigures(new ArrayList<Figure>());
+                        model.sendData(new DataBox(Command.SET_FIGURES, new ArrayList<Figure>()));
+                        if(model.getMode() == "laser")  // レーザーポインタも消えるので復活させる
+                            model.setMode("laser");
                     }
                 }
                 break;
