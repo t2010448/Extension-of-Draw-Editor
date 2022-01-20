@@ -52,12 +52,14 @@ class ServerObservable extends Observable implements Serializable{
     }
     // 図形リストから Figure f を削除
     public void deleteFigure(Figure f) {
-        for (int i = 0; i < figures.size(); i++) {
-            if(f.getId() == figures.get(i).getId()) {
-                figures.remove(i);
-                setChanged();
-                notifyObservers();
-                break;
+        if(f != null) {
+            for (int i = 0; i < figures.size(); i++) {
+                if(f.getId() == figures.get(i).getId()) {
+                    figures.remove(i);
+                    setChanged();
+                    notifyObservers();
+                    break;
+                }
             }
         }
     }
