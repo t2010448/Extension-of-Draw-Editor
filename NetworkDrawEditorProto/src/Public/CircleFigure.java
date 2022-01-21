@@ -10,6 +10,8 @@ public class CircleFigure extends Figure{
 
     public void draw(Graphics g) {
         g.setColor(color);
+        Graphics2D g2 = (Graphics2D)g;
+        g2.setStroke(new BasicStroke(3));
         g.drawOval(x,y,width,height);
     }
     public boolean judgein(int x, int y) {
