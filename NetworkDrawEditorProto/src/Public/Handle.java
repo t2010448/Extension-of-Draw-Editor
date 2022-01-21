@@ -9,16 +9,26 @@ public class Handle extends Figure{
     public Handle(Figure f) {
         super(f.getX(), f.getY(), f.getWidth(), f.getHeight(), Color.BLACK);
 
-        handles = new Figure[9];
-        handles[0] = new RectangleFigure(x-1, y-1, width+2, height+2, Color.BLACK);   // 枠
-        handles[1] = new FillRectFigure(x-6,       y-6,        12, 12, Color.BLACK);  // 左上
-        handles[2] = new FillRectFigure(x-6,       y-6+height, 12, 12, Color.BLACK);  // 左下
-        handles[3] = new FillRectFigure(x-6+width, y-6,        12, 12, Color.BLACK);  // 右上
-        handles[4] = new FillRectFigure(x-6+width, y-6+height, 12, 12, Color.BLACK);  // 右下
-        handles[5] = new FillRectFigure(x-6,         y-6+height/2, 12, 12, Color.BLACK); // 左
-        handles[6] = new FillRectFigure(x-6+width/2, y-6,          12, 12, Color.BLACK); // 上
-        handles[7] = new FillRectFigure(x-6+width/2, y-6+height,   12, 12, Color.BLACK); // 下
-        handles[8] = new FillRectFigure(x-6+width,   y-6+height/2, 12, 12, Color.BLACK); // 右
+        handles = new Figure[17];
+        // ↓当たり判定の図形
+        handles[0] = new RectangleFigure(x, y, width, height, Color.GRAY);   // 枠
+        handles[1] = new FillRectFigure(x-6,       y-6,        12, 12, Color.WHITE);  // 左上
+        handles[2] = new FillRectFigure(x-6,       y-6+height, 12, 12, Color.WHITE);  // 左下
+        handles[3] = new FillRectFigure(x-6+width, y-6,        12, 12, Color.WHITE);  // 右上
+        handles[4] = new FillRectFigure(x-6+width, y-6+height, 12, 12, Color.WHITE);  // 右下
+        handles[5] = new FillRectFigure(x-6,         y-6+height/2, 12, 12, Color.WHITE); // 左
+        handles[6] = new FillRectFigure(x-6+width/2, y-6,          12, 12, Color.WHITE); // 上
+        handles[7] = new FillRectFigure(x-6+width/2, y-6+height,   12, 12, Color.WHITE); // 下
+        handles[8] = new FillRectFigure(x-6+width,   y-6+height/2, 12, 12, Color.WHITE); // 右
+        // ↓装飾
+        handles[9]  = new RectangleFigure(x-6,       y-6,        12, 12, Color.GRAY);  // 左上
+        handles[10] = new RectangleFigure(x-6,       y-6+height, 12, 12, Color.GRAY);  // 左下
+        handles[11] = new RectangleFigure(x-6+width, y-6,        12, 12, Color.GRAY);  // 右上
+        handles[12] = new RectangleFigure(x-6+width, y-6+height, 12, 12, Color.GRAY);  // 右下
+        handles[13] = new RectangleFigure(x-6,         y-6+height/2, 12, 12, Color.GRAY); // 左
+        handles[14] = new RectangleFigure(x-6+width/2, y-6,          12, 12, Color.GRAY); // 上
+        handles[15] = new RectangleFigure(x-6+width/2, y-6+height,   12, 12, Color.GRAY); // 下
+        handles[16] = new RectangleFigure(x-6+width,   y-6+height/2, 12, 12, Color.GRAY); // 右
     }
     public void draw(Graphics g) {
         for(int i=0; i < handles.length; i++) {
