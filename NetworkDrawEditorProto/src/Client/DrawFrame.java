@@ -88,6 +88,7 @@ class ButtonPanel extends JPanel implements ActionListener {
         color.setActionCommand("color");
         color.addActionListener(this);
         color.setToolTipText("色を編集");
+        color.setFocusable(false);
         this.add(color);
 
         icon = new ImageIcon("resourses/icon_rectangle.jpg");
@@ -95,6 +96,7 @@ class ButtonPanel extends JPanel implements ActionListener {
         selectFunc.setActionCommand("selectFunc");
         selectFunc.addActionListener(this);
         selectFunc.setToolTipText("ツールを選択");
+        selectFunc.setFocusable(false);
         this.add(selectFunc);
 
         icon = new ImageIcon("resourses/icon_clear.jpg");
@@ -102,6 +104,7 @@ class ButtonPanel extends JPanel implements ActionListener {
         clear.setActionCommand("clear");
         clear.addActionListener(this);
         clear.setToolTipText("図形を削除");
+        clear.setFocusable(false);
         this.add(clear);
 
         icon = new ImageIcon("resourses/icon_save.jpg");
@@ -109,6 +112,7 @@ class ButtonPanel extends JPanel implements ActionListener {
         saveAs.setActionCommand("saveAs");
         saveAs.addActionListener(this);
         saveAs.setToolTipText("保存");
+        saveAs.setFocusable(false);
         this.add(saveAs);
 
         icon = new ImageIcon("resourses/icon_load.jpg");
@@ -116,6 +120,7 @@ class ButtonPanel extends JPanel implements ActionListener {
         load.setActionCommand("load");
         load.addActionListener(this);
         load.setToolTipText("読み込み");
+        load.setFocusable(false);
         this.add(load);
 
         TOOLS = new String[] {
