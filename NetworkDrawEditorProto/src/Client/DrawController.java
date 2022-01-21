@@ -168,32 +168,16 @@ public class DrawController implements MouseListener,MouseMotionListener,KeyList
         }
     }
 
-    public void keyTyped(KeyEvent e) {
-        switch(e.getKeyChar()) {
-            case 'x' : // 選択している図形削除
-                if((model.getDrawingFigure())!=null) {
-                    model.sendData(new DataBox(Command.DELETE_FIGURE, model.getDrawingFigure()));
-                    model.setDrawingFigure(null);
-                }
-                break;
-            
-            // 仮置き (実際はViewでボタンによってモード切り替え)
-
-            case 'l' : // レーザーポインタ
-                model.setMode("laser");
-                break;
-            case 'h': // フリーハンド
-                model.setMode("draw");
-                model.setFigShape(FigShape.FREEHAND);
-                break;
-                
-            // ここまで
-
-            default :
-                break;
+    public void keyTyped(KeyEvent e) { }
+    public void keyPressed(KeyEvent e) {
+        int k = e.getKeyCode();
+        if(k == KeyEvent.VK_X || k == KeyEvent.VK_DELETE) { // 選択している図形を削除
+            if((model.getDrawingFigure())!=null) {
+                model.sendData(new DataBox(Command.DELETE_FIGURE, model.getDrawingFigure()));
+                model.setDrawingFigure(null);
+            }
         }
     }
-    public void keyPressed(KeyEvent e) { }
     public void keyReleased(KeyEvent e) { }
 
     public void actionPerformed(ActionEvent e) { }
