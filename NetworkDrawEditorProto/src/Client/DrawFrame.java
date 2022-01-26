@@ -77,6 +77,7 @@ class ButtonPanel extends JPanel implements ActionListener {
 
     private final String[] TOOLS;
     private String ptool;
+    private JLabel colorLabel;
 
     public ButtonPanel(DrawModel model, JFrame parent) {
         this.model = model;
@@ -133,13 +134,22 @@ class ButtonPanel extends JPanel implements ActionListener {
             "レーザーポインター",
         };
         ptool = TOOLS[0];
+
+        colorLabel = new JLabel("Color");
+        colorLabel.setOpaque(true);
+        colorLabel.setBackground(model.currentColor);
+        colorLabel.setForeground(getVisibleColor(model.currentColor));
+        this.add(colorLabel);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "color":
                 Color c = JColorChooser.showDialog(frame, "色の編集", Color.WHITE);
                 model.setColor(c);
+                colorLabel.setBackground(c);
+                colorLabel.setForeground(getVisibleColor(c));
                 break;
 
             case "clear":
@@ -225,5 +235,14 @@ class ButtonPanel extends JPanel implements ActionListener {
             default:
                 break;
         }
+    }
+
+    private Color getVisibleColor(Color back) {
+        int[] a = new int[]{back.getRed(), back.getGreen(), back.getBlue()};
+        Arrays.sort(a);
+        if((a[0] + a[2]) / 2 >= 128)
+            return Color.BLACK;
+        else
+            return Color.WHITE;
     }
 }
