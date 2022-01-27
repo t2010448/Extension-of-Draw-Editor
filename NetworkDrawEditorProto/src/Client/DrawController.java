@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 ////////////////////////////////////////////
 // Controller
-public class DrawController implements MouseListener,MouseMotionListener,KeyListener,ActionListener {
+public class DrawController implements MouseListener,MouseMotionListener,KeyListener {
     protected DrawModel model;
     protected int dragStartX,dragStartY,oldX,oldY,oldWidth, oldHeight;
     protected String reshapeMode;
@@ -179,6 +179,4 @@ public class DrawController implements MouseListener,MouseMotionListener,KeyList
         }
     }
     public void keyReleased(KeyEvent e) { }
-
-    public void actionPerformed(ActionEvent e) { }
 }
