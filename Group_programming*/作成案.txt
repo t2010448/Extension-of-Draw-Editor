@@ -9,3 +9,9 @@ fileの保存、呼び出し
 図形の内部の点かの判定
 
 figureにLaser point、freehandを追加
+
+mousedragged
+    LASERPOINTはムーブにする
+
+handle
+    freehand用も作る

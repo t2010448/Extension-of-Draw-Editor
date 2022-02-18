@@ -1,0 +1,13 @@
+model
+
+<LaserPoint>
+drawingFigureで動かし続け、離したら消す
+モード設定
+クリックでcreateFigures 
+動かすとmoveFigures
+離すとremove
+
+<FreeHand>
+クリックでcreateFigures
+    箱の生成+その位置の点
+動かすとreshape

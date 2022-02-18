@@ -4,8 +4,8 @@ import java.awt.*;
 
 public class LaserPointFigure extends Figure {
 
-    public LaserPointFigure(int x,int y,int w,int h,Color c) {
-        super(x,y,w,h,c);
+    public LaserPointFigure(int x,int y,Color c) {
+        super(x,y,5,5,c);
     }
     public void draw(Graphics g) {
         g.setColor(color);
