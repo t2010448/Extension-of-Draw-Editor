@@ -22,6 +22,7 @@ class CommServer {
     // サーバ用のソケット(通信路)のオープン
     // サーバ用のソケットはクライアントからの接続待ち専用．
     // ポート番号のみを指定する．
+    // ※一部改変
     boolean open(int port){
         this.port=port;
         try{ 
