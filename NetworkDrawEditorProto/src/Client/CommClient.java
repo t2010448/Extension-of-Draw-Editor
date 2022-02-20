@@ -31,7 +31,7 @@ class CommClient {
         return true;
     }
 
-    // データ送信
+    // データ送信 ※一部改変
     boolean send(DataBox dataBox){
         if (out == null) { return false; }
         try {
@@ -42,7 +42,7 @@ class CommClient {
         return true;
     }
 
-    // データ受信
+    // データ受信 ※一部改変
     DataBox recv(){
         DataBox dataBox = null;
         if (in == null) { return null; }
