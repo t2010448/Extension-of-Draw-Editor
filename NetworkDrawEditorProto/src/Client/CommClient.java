@@ -16,6 +16,7 @@ class CommClient {
 
     // クライアントソケット(通信路)のオープン　
     // 接続先のホスト名とポート番号が必要．
+    // ※一部改変
     boolean open(String host,int port){
         try{
             clientS = new Socket(InetAddress.getByName(host), port);
