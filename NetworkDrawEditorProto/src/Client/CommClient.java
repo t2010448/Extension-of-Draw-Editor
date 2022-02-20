@@ -4,7 +4,6 @@ import Public.*;
 
 import java.net.*;
 import java.io.*;
-//import java.util.*;
 
 class CommClient {
     private Socket clientS = null;
