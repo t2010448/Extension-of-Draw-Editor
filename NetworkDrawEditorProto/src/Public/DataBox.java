@@ -5,7 +5,7 @@ import java.util.*;
 
 // データを送受信する用の箱
 // DataBox(Command, Data) でコマンドとデータを格納
-// getCommand(), getFigureList(), getFigure() でコマンドやデータの取り出しが可能
+// getCommand(), getFigList(), getFigure() でコマンドやデータの取り出しが可能
 // (ArrayList の送受信は正常に動かなかったので内部で配列に変換して送受信するようにした)
 public class DataBox implements Serializable{
     protected Command command = null;
