@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.io.*;
+import java.net.URL;
+import java.awt.image.ImageProducer;
 
 ////////////////////////////////////////////
 // View
@@ -79,45 +81,44 @@ class ButtonPanel extends JPanel implements ActionListener {
     private String ptool;
     private JLabel colorLabel;
 
+    private ImageIcon iiCircle, iiClear, iiColor, iiFillCircle, iiFillRect, iiFreehand, iiLoad;
+    private ImageIcon iiPointer, iiRect, iiSave, iiSelect;
+
     public ButtonPanel(DrawModel model, JFrame parent) {
         this.model = model;
         this.frame = parent;
         this.setBackground(Color.GRAY);
 
-        var icon = new ImageIcon("resourses/icon_color.jpg");
-        color = new JButton(icon);
+        loadImageIcons();
+        color = new JButton(iiColor);
         color.setActionCommand("color");
         color.addActionListener(this);
         color.setToolTipText("色を編集");
         color.setFocusable(false);
         this.add(color);
 
-        icon = new ImageIcon("resourses/icon_rectangle.jpg");
-        selectFunc = new JButton(icon);
+        selectFunc = new JButton(iiRect);
         selectFunc.setActionCommand("selectFunc");
         selectFunc.addActionListener(this);
         selectFunc.setToolTipText("ツールを選択");
         selectFunc.setFocusable(false);
         this.add(selectFunc);
 
-        icon = new ImageIcon("resourses/icon_clear.jpg");
-        clear = new JButton(icon);
+        clear = new JButton(iiClear);
         clear.setActionCommand("clear");
         clear.addActionListener(this);
         clear.setToolTipText("図形を削除");
         clear.setFocusable(false);
         this.add(clear);
 
-        icon = new ImageIcon("resourses/icon_save.jpg");
-        saveAs = new JButton(icon);
+        saveAs = new JButton(iiSave);
         saveAs.setActionCommand("saveAs");
         saveAs.addActionListener(this);
         saveAs.setToolTipText("保存");
         saveAs.setFocusable(false);
         this.add(saveAs);
 
-        icon = new ImageIcon("resourses/icon_load.jpg");
-        load = new JButton(icon);
+        load = new JButton(iiLoad);
         load.setActionCommand("load");
         load.addActionListener(this);
         load.setToolTipText("読み込み");
@@ -147,9 +148,11 @@ class ButtonPanel extends JPanel implements ActionListener {
         switch (e.getActionCommand()) {
             case "color":
                 Color c = JColorChooser.showDialog(frame, "色の編集", Color.WHITE);
-                model.setColor(c);
-                colorLabel.setBackground(c);
-                colorLabel.setForeground(getVisibleColor(c));
+                if(c != null) {
+                    model.setColor(c);
+                    colorLabel.setBackground(c);
+                    colorLabel.setForeground(getVisibleColor(c));
+                }
                 break;
 
             case "clear":
@@ -164,7 +167,6 @@ class ButtonPanel extends JPanel implements ActionListener {
                         JOptionPane.OK_CANCEL_OPTION
                     );
                     if (value == JOptionPane.OK_OPTION) {
-                        // model.setFigures(new ArrayList<Figure>());
                         model.sendData(new DataBox(Command.SET_FIGURES, new ArrayList<Figure>()));
                         if(model.getMode() == "laser")  // レーザーポインタも消えるので復活させる
                             model.setMode("laser");
@@ -206,29 +208,29 @@ class ButtonPanel extends JPanel implements ActionListener {
                 if (ptool == TOOLS[0]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.RECTANGLE);
-                    selectFunc.setIcon(new ImageIcon("resourses/icon_rectangle.jpg"));
+                    selectFunc.setIcon(iiRect);
                 } else if (ptool == TOOLS[1]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.FILLRECT);
-                    selectFunc.setIcon(new ImageIcon("resourses/icon_fillrect.jpg"));
+                    selectFunc.setIcon(iiFillRect);
                 } else if (ptool == TOOLS[2]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.CIRCLE);
-                    selectFunc.setIcon(new ImageIcon("resourses/icon_circle.jpg"));
+                    selectFunc.setIcon(iiCircle);
                 } else if (ptool == TOOLS[3]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.FILLCIRCLE);
-                    selectFunc.setIcon(new ImageIcon("resourses/icon_fillcircle.jpg"));
+                    selectFunc.setIcon(iiFillCircle);
                 } else if (ptool == TOOLS[4]) {
                     model.setMode("draw");
                     model.setFigShape(FigShape.FREEHAND);
-                    selectFunc.setIcon(new ImageIcon("resourses/icon_freehand.jpg"));
+                    selectFunc.setIcon(iiFreehand);
                 } else if (ptool == TOOLS[5]) {
                     model.setMode("select");
-                    selectFunc.setIcon(new ImageIcon("resourses/icon_select.jpg"));
+                    selectFunc.setIcon(iiSelect);
                 } else if (ptool == TOOLS[6]) {
                     model.setMode("laser");
-                    selectFunc.setIcon(new ImageIcon("resourses/icon_pointer.jpg"));
+                    selectFunc.setIcon(iiPointer);
                 }
                 break;
 
@@ -244,5 +246,30 @@ class ButtonPanel extends JPanel implements ActionListener {
             return Color.BLACK;
         else
             return Color.WHITE;
+    }
+
+    private void loadImageIcons() {
+        iiCircle = loadImageIcon("resources/icon_circle.jpg");
+        iiClear = loadImageIcon("resources/icon_clear.jpg");
+        iiColor = loadImageIcon("resources/icon_color.jpg");
+        iiFillCircle = loadImageIcon("resources/icon_fillcircle.jpg");
+        iiFillRect = loadImageIcon("resources/icon_fillrect.jpg");
+        iiFreehand = loadImageIcon("resources/icon_freehand.jpg");
+        iiLoad = loadImageIcon("resources/icon_load.jpg");
+        iiPointer = loadImageIcon("resources/icon_pointer.jpg");
+        iiRect = loadImageIcon("resources/icon_rectangle.jpg");
+        iiSave = loadImageIcon("resources/icon_save.jpg");
+        iiSelect = loadImageIcon("resources/icon_select.jpg");
+    }
+
+    private ImageIcon loadImageIcon(String path) {
+        try {
+            URL url = this.getClass().getResource(path);
+            Image img = this.createImage((ImageProducer)url.getContent());
+            return new ImageIcon(img);
+        } catch(IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }
